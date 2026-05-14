@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --color-forest: #143630;
+  --color-ember: #ff4f20;
+  --color-mist: #d9d9d9;
+  --background: #ffffff;
+  --foreground: var(--color-forest);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-league);
+  --text-display: 1.75rem;
+  --text-title1: 1.375rem;
+  --text-title2: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-label: 0.8125rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-league), system-ui, sans-serif;
+}
+
+.text-display {
+  font-size: var(--text-display);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.text-title1 {
+  font-size: var(--text-title1);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.text-title2 {
+  font-size: var(--text-title2);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.text-body {
+  font-size: var(--text-body);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.text-body-sm {
+  font-size: var(--text-body-sm);
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.text-label {
+  font-size: var(--text-label);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Auth / marketing surfaces — Forest scrim + Ember glow (style guide §2.2) */
+.auth-brand-panel {
+  background-color: var(--color-forest);
+  background-image:
+    radial-gradient(
+      ellipse 80% 60% at 15% 20%,
+      rgb(255 79 32 / 0.14) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 85% 80%,
+      rgb(255 255 255 / 0.07) 0%,
+      transparent 50%
+    );
+}
+
+.auth-card {
+  box-shadow:
+    0 1px 2px rgb(20 54 48 / 0.06),
+    0 12px 40px rgb(20 54 48 / 0.08);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .settings-nav-slider {
+    transition:
+      top 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      height 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
