@@ -1,6 +1,7 @@
 "use client";
 
 import { confirmJoinVendorAction } from "@/app/join/actions";
+import { BrandMark } from "@/components/auth/brand-mark";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { JOIN_VENDOR_QUERY_KEY } from "@/lib/join-url";
@@ -71,7 +72,8 @@ export function JoinClient({ snapshot, initialUser }: Props) {
   return (
     <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-12">
       <div className="text-center">
-        <p className="text-label font-semibold uppercase tracking-wide text-[var(--color-forest)]/55">
+        <BrandMark size={40} className="mx-auto" />
+        <p className="mt-3 text-label font-semibold uppercase tracking-wide text-[var(--color-forest)]/55">
           MyCult loyalty
         </p>
         <h1 className="mt-2 text-display text-[var(--color-forest)]">

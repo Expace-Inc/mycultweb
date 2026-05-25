@@ -1,8 +1,8 @@
-import brandLogo from "@assets/brand/C.png";
+import brandLogo from "@assets/brand/MyCult.png";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-/** Logo file: `assets/brand/C.png` (replace placeholder with design master, e.g. 1080×1350). */
+/** MyCult mark — `assets/brand/MyCult.png` (1080×1350). */
 const LOGO_WIDTH = 1080;
 const LOGO_HEIGHT = 1350;
 const ASPECT = LOGO_WIDTH / LOGO_HEIGHT;

@@ -1,3 +1,5 @@
+import { BrandMark } from "@/components/auth/brand-mark";
+import { Wordmark } from "@/components/auth/wordmark";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -48,10 +50,11 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col md:flex-row">
       <aside className="flex w-full flex-col bg-[var(--color-forest)] text-white md:min-h-screen md:w-56 md:shrink-0">
         <div className="border-b border-white/10 px-4 py-5">
-          <p className="text-label uppercase tracking-wide text-white/60">
-            MyCult
-          </p>
-          <p className="mt-1 font-semibold leading-snug">
+          <div className="flex items-center gap-3">
+            <BrandMark size={36} />
+            <Wordmark variant="hero" className="text-title2" />
+          </div>
+          <p className="mt-3 font-semibold leading-snug">
             {vendor?.name ?? "Operator"}
           </p>
           <p className="mt-0.5 text-body-sm capitalize text-white/70">

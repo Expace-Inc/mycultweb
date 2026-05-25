@@ -12,6 +12,10 @@ const league = League_Spartan({
 export const metadata: Metadata = {
   title: "MyCult — Operator",
   description: "Configure and monitor your loyalty program",
+  icons: {
+    icon: "/brand/MyCult.png",
+    apple: "/brand/MyCult.png",
+  },
 };
 
 export default function RootLayout({

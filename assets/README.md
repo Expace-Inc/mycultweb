@@ -1,5 +1,5 @@
 # Operator web assets
 
-Static files used by the Next.js app (imports, not URL-served from `public/` unless you copy them).
+Static files imported by the Next.js app (`@assets/*`). Copies under `public/brand/` are used for favicons and static URLs.
 
-- **`brand/C.png`** — MyCult mark used on auth screens (`BrandMark`). Replace the committed placeholder with the full-resolution master (e.g. 1080×1350) from design; keep the filename so imports stay stable.
+- **`brand/MyCult.png`** — MyCult mark (1080×1350), used by `BrandMark` on auth screens, app shell, and browser icons.
