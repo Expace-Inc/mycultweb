@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { buildJoinUrl } from "@/lib/join-url";
+import { getSiteOrigin } from "@/lib/site-origin";
 import { Card, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { headers } from "next/headers";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -33,17 +33,7 @@ export default async function JoinQrSettingsPage() {
 
   const canManage = staff.role === "owner" || staff.role === "manager";
 
-  const headerList = await headers();
-  const proto = headerList.get("x-forwarded-proto") ?? "http";
-  const host =
-    headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "";
-  const inferredOrigin =
-    host && !host.includes("localhost")
-      ? `${proto}://${host}`
-      : "http://localhost:3000";
-  const siteOrigin =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? inferredOrigin;
-  const joinUrl = buildJoinUrl(siteOrigin, staff.vendor_id);
+  const joinUrl = buildJoinUrl(getSiteOrigin(), staff.vendor_id);
   const qrSrc = "/api/join-qr";
 
   return (
@@ -100,13 +90,6 @@ export default async function JoinQrSettingsPage() {
               <div className="rounded-lg border border-[var(--color-forest)]/10 bg-[var(--color-mist)]/25 px-3 py-2 font-mono text-body-sm break-all text-[var(--color-forest)]/90">
                 {joinUrl}
               </div>
-              <p className="mt-4 text-body-sm text-[var(--color-forest)]/60">
-                Set{" "}
-                <code className="rounded bg-[var(--color-forest)]/8 px-1">
-                  NEXT_PUBLIC_SITE_URL
-                </code>{" "}
-                in production so the QR matches your live domain.
-              </p>
             </Card>
           </div>
 

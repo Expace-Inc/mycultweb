@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { buildJoinUrl } from "@/lib/join-url";
+import { getSiteOrigin } from "@/lib/site-origin";
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
 
@@ -30,9 +31,7 @@ export async function GET() {
     return new NextResponse("Forbidden", { status: 403 });
   }
 
-  const origin =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
-  const joinUrl = buildJoinUrl(origin, staff.vendor_id);
+  const joinUrl = buildJoinUrl(getSiteOrigin(), staff.vendor_id);
 
   const png = await QRCode.toBuffer(joinUrl, {
     type: "png",
