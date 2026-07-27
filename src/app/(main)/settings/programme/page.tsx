@@ -418,24 +418,29 @@ export default async function ProgrammeSettingsPage({
       redirect("/settings/programme?error=invalid");
     }
 
-    const { error } = await supabase.from("loyalty_programs").insert({
-      vendor_id: s.vendor_id,
-      name,
-      points_name,
-      earn_rate,
-      earn_per_currency_units,
-      earn_config: cfg,
-      is_active: true,
-    });
+    const { data: rpcData, error: rpcErr } = await supabase.rpc(
+      "upsert_loyalty_program",
+      {
+        p_name: name,
+        p_points_name: points_name,
+        p_earn_rate: earn_rate,
+        p_earn_per_currency_units: earn_per_currency_units,
+        p_earn_config: cfg,
+        p_is_active: true,
+        p_program_id: null,
+      },
+    );
 
-    if (error) {
+    if (rpcErr) {
+      console.error("upsert_loyalty_program", rpcErr);
       redirect("/settings/programme?error=save");
     }
 
-    await supabase
-      .from("vendors")
-      .update({ onboarding_rules_done: true })
-      .eq("id", s.vendor_id);
+    const payload = (rpcData ?? {}) as { ok?: boolean; error?: string };
+    if (payload.ok === false) {
+      console.error("upsert_loyalty_program", payload);
+      redirect("/settings/programme?error=save");
+    }
 
     redirect("/settings/programme?saved=1");
   }
@@ -482,27 +487,29 @@ export default async function ProgrammeSettingsPage({
       redirect("/settings/programme?edit=1&error=invalid");
     }
 
-    const { error } = await supabase
-      .from("loyalty_programs")
-      .update({
-        name,
-        points_name,
-        earn_rate,
-        earn_per_currency_units,
-        earn_config: cfg,
-        is_active,
-      })
-      .eq("id", id)
-      .eq("vendor_id", s.vendor_id);
+    const { data: rpcData, error: rpcErr } = await supabase.rpc(
+      "upsert_loyalty_program",
+      {
+        p_name: name,
+        p_points_name: points_name,
+        p_earn_rate: earn_rate,
+        p_earn_per_currency_units: earn_per_currency_units,
+        p_earn_config: cfg,
+        p_is_active: is_active,
+        p_program_id: id,
+      },
+    );
 
-    if (error) {
+    if (rpcErr) {
+      console.error("upsert_loyalty_program", rpcErr);
       redirect("/settings/programme?edit=1&error=save");
     }
 
-    await supabase
-      .from("vendors")
-      .update({ onboarding_rules_done: true })
-      .eq("id", s.vendor_id);
+    const payload = (rpcData ?? {}) as { ok?: boolean; error?: string };
+    if (payload.ok === false) {
+      console.error("upsert_loyalty_program", payload);
+      redirect("/settings/programme?edit=1&error=save");
+    }
 
     redirect("/settings/programme?saved=1");
   }

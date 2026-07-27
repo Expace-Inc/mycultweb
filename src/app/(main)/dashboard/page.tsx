@@ -11,7 +11,8 @@ type Summary = {
   spend_total?: string | number;
   new_members?: number;
   points_issued?: number;
-  period_days?: number;
+  period_days?: number | null;
+  all_time?: boolean;
   error?: string;
 };
 
@@ -65,7 +66,7 @@ export default async function DashboardPage() {
       : null;
 
   const { data: summaryRaw } = await supabase.rpc("get_dashboard_summary", {
-    p_days: 7,
+    p_days: null,
   });
 
   const { data: membersRaw } = await supabase.rpc("list_vendor_members", {
@@ -88,14 +89,13 @@ export default async function DashboardPage() {
   const spend = summary.ok ? Number(summary.spend_total ?? 0) : 0;
   const newMembers = summary.ok ? Number(summary.new_members ?? 0) : 0;
   const points = summary.ok ? Number(summary.points_issued ?? 0) : 0;
-  const days = summary.period_days ?? 7;
 
   return (
     <div className="flex flex-col gap-8">
       <div>
         <h1 className="text-display text-[var(--color-forest)]">Dashboard</h1>
         <p className="mt-1 text-body text-[var(--color-forest)]/75">
-          Last {days} days — visits, spend, and members with recent activity.
+          All-time visits, spend, members, and points for your programme.
         </p>
       </div>
 
@@ -144,13 +144,13 @@ export default async function DashboardPage() {
         <Card className="flex flex-col gap-2">
           <div className="flex items-center gap-2 text-body-sm font-medium text-[var(--color-forest)]/70">
             <Users className="size-4 text-[var(--color-ember)]" aria-hidden />
-            New members
+            Members
           </div>
           <p className="tabular-nums text-2xl font-bold text-[var(--color-forest)]">
             {newMembers}
           </p>
           <p className="text-body-sm text-[var(--color-forest)]/60">
-            First-time in period
+            With at least one visit
           </p>
         </Card>
         <Card className="flex flex-col gap-2">
